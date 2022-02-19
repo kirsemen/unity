@@ -58,15 +58,17 @@ public class wheel : MonoBehaviour
         cj.angularXMotion = ConfigurableJointMotion.Locked;
         cj.angularYMotion = ConfigurableJointMotion.Locked;
         cj.angularZMotion = ConfigurableJointMotion.Locked;
+
         var solim = cj.linearLimit;
         solim.limit = (MaxUpWeight + MinUpWeight) / 2;
         cj.linearLimit = solim;
+        var connectedAnchor = cj.connectedAnchor;
         cj.autoConfigureConnectedAnchor = false;
-        cj.connectedAnchor += transform.up * (MaxUpWeight - MinUpWeight) / 2;
+        cj.connectedAnchor = transform.up * (MaxUpWeight - MinUpWeight) / 2 + connectedAnchor; 
 
         var child = new GameObject(gameObject.name);
         child.transform.SetParent(gameObject.transform);
-        child.layer = 3;
+        child.layer = LayerMask.NameToLayer("tank");
         child.transform.localPosition = new Vector3(0, 0, 0);
         child.transform.localRotation = new Quaternion(0, 0, 0, 0);
 
@@ -85,6 +87,7 @@ public class wheel : MonoBehaviour
 
         StartPos = transform.localPosition;
     }
+
     private void LateUpdate()
     {
 

@@ -76,7 +76,7 @@ public class tank : MonoBehaviour
                     -MaxSpeedRotationBarrel), MaxSpeedRotationBarrel) + Barrel.transform.localEulerAngles.x),
                 -MinBarrelAngle), MaxBarrelAngle),
             0, 0);
-        ushort layerMask = 1 << 3;
+        ushort layerMask = (ushort)(1 << LayerMask.NameToLayer("tank"));
         layerMask = (ushort)~layerMask;
         RaycastHit hit;
         Vector3 pos = _Camera.transform.GetChild(0).transform.position - _Camera.transform.position;
