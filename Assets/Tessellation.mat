@@ -20,18 +20,17 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _DispTex:
-        m_Texture: {fileID: 8600000, guid: 0ce0d51fca0e469489d912b88dda64c3, type: 2}
+        m_Texture: {fileID: 8600000, guid: 0376bf3bcc7bcf04d9134f7ad5baebfb, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 8600000, guid: 0ce0d51fca0e469489d912b88dda64c3, type: 2}
+        m_Texture: {fileID: 8600000, guid: 0376bf3bcc7bcf04d9134f7ad5baebfb, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Ints: []
     m_Floats:
     - _Displacement: 0.3
     - _EdgeLength: 50
