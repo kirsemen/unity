@@ -6,14 +6,14 @@ struct Pixel {
 	int inside;
 };
 
-RWStructuredBuffer<Pixel> date;
+RWStructuredBuffer<Pixel> data;
 
 [numthreads(32, 32, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
-	int i = id.x + id.y * 4096;
-	if (date[i].inside) {
-		date[i].pos += date[id.x].vec;
+	int i = id.x + id.y * 32768;
+	if (data[i].inside) {
+		data[i].pos += data[id.x].vec;
 	}
 
 }

@@ -31,6 +31,7 @@ public class Water4 : MonoBehaviour
     public CustomRenderTexture tex;
     public CustomRenderTexture texture;
 
+    private int overflow = 0;
     private ComputeBuffer computeBuffer;
     private void Start()
     {
@@ -38,7 +39,7 @@ public class Water4 : MonoBehaviour
         tex.enableRandomWrite = true;
         tex.initializationColor = new Color(0, 0, 0, 0);
 
-        Pixel[] data = new Pixel[131072];
+        Pixel[] data = new Pixel[1048576];
         computeBuffer = new ComputeBuffer(data.Length, sizeof(float) * 4 + sizeof(int));
         computeBuffer.SetData(data);
 
@@ -46,7 +47,6 @@ public class Water4 : MonoBehaviour
 
     private void Update()
     {
-
         RaycastHit hit;
         if (Physics.Raycast(transform.position, -transform.up, out hit))
         {
@@ -57,21 +57,23 @@ public class Water4 : MonoBehaviour
             //        overflow++;
             //        overflow %= data.Length;
             //    }
-
-            computeShader2.SetBuffer(0, "date", computeBuffer);
-            computeShader2.SetVector("pos", hit.textureCoord * new UnityEngine.Vector2(texture.width, texture.height) - new UnityEngine.Vector2(10, 10));
-            computeShader2.SetVector("sizePoint", new UnityEngine.Vector2(20, 20));
-            computeShader2.SetInt("index", 0);
+            computeShader2.SetBuffer(0, "data", computeBuffer);
+            computeShader2.SetInt("countData", computeBuffer.count);
+            UnityEngine.Vector2 pos = hit.textureCoord * new UnityEngine.Vector2(texture.width, texture.height) - new UnityEngine.Vector2(50, 50);
+            computeShader2.SetInts("pos", new int[] { (int)pos.x, (int)pos.y });
+            computeShader2.SetInts("sizePoint", new int[] { 100, 100 });
+            computeShader2.SetInt("index", overflow);
             computeShader2.Dispatch(0, 1, 1, 1);
+            overflow +=  100* 100;
+            overflow %= computeBuffer.count;
 
         }
 
 
-        computeShader.SetBuffer(0, "date", computeBuffer);
+        computeShader.SetBuffer(0, "data", computeBuffer);
         computeShader.Dispatch(0, computeBuffer.count / 1024, 1, 1);
 
-
-        computeShader1.SetBuffer(0, "date", computeBuffer);
+        computeShader1.SetBuffer(0, "data", computeBuffer);
         computeShader1.SetTexture(0, "tex", tex);
         computeShader1.Dispatch(0, computeBuffer.count / 1024, 1, 1);
 

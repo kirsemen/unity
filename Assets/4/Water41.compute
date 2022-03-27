@@ -6,14 +6,14 @@ struct Pixel {
 	int inside;
 };
 
-RWStructuredBuffer<Pixel> date;
+RWStructuredBuffer<Pixel> data;
 RWTexture2D<float4> tex;
 
 [numthreads(32, 32, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
-	int i = id.x + id.y * 4096;
-	if (date[i].inside) {
-		tex[date[i].pos] = 1;
+	int i = id.x + id.y * 32768;
+	if (data[i].inside) {
+		tex[data[i].pos] = 1;
 	}
 }
