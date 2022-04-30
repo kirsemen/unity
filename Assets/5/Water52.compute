@@ -1,0 +1,30 @@
+#pragma kernel CSMain
+
+struct Pixel {
+	float2 pos;
+	float2 vec;
+	int inside;
+};
+
+RWStructuredBuffer<Pixel> data;
+float2 velosity;
+int countData;
+int2 pos;
+int2 sizePoint;
+int index;
+
+[numthreads(1, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	for (int x = 0; x < sizePoint.x; x++)
+	{
+		for (int y = 0; y < sizePoint.y; y++)
+		{
+			data[index].pos = pos + int2(x, y);
+			data[index].vec = velosity;
+			data[index].inside = 1;
+			index += 1;
+			index %= countData;
+		}
+	}
+}
