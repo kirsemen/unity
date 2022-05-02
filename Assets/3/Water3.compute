@@ -1,0 +1,20 @@
+#pragma kernel CSMain
+
+struct Pixel {
+	float2 pos;
+	float2 vec;
+	int inside;
+};
+
+RWStructuredBuffer<Pixel> date;
+float2 SizeMap;
+
+[numthreads(32, 32, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	int i = id.x + id.y * 4096;
+	if (date[i].inside) {
+		date[i].pos += date[id.x].vec;
+	}
+
+}

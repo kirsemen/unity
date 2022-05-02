@@ -1,0 +1,18 @@
+#pragma kernel CSMain
+
+struct Pixel {
+	float2 pos;
+	float2 vec;
+	float width;
+};
+
+RWStructuredBuffer<Pixel> data;
+
+[numthreads(32, 32, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	int i = id.x + id.y * 32768;
+	data[i].pos += data[id.x].vec;
+	
+
+}
